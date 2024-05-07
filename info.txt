@@ -1,0 +1,52 @@
+Hello! It's quadratic_equation - library to calculate roots of quadratic equations.
+
+
+! This project using CMake to compile. You need CMake version 2.8 or higher to compile that
+
+
+Commands:
+Use "make compile" to build library.
+Use "make check" to build library and tests, running tests and get testing report in console.
+Use "make clean" to remove all builded files. You can build library and tests again.
+
+
+Connect this library to your project and use function solve_equation(a,b,c) to solve equation ax^2+bx+c=0.
+Example of project using this library you can find in directory "example"
+
+
+Abilities:
+solve_equation return pair of complex numbers. You can take real and imaginary part of first and second number.
+For example, expression solve_equation(a,b,c).second.Re return real part of second root.
+Always second.Re >= first.Re and second.Im >= first.Im
+If args incorrect (anyone is nan or inf or a == b == 0), solve_equation return { { NAN, NAN }, { NAN, NAN } }
+solve_equation compare discriminant and 0 with some permissible error. Default value is 10^(-10).
+You can change permissible error by change_permissible_error_of_discriminant(double new_value).
+You can get default value of permissible error by macro DEFAULT_VALUE_OF_permissible_error_of_discriminant
+Also you can use structs complex_number and complex_pair in your projects if you need.
+
+
+Testing interface:
+Library contains 2 function, s: solve_equation, change_permissible_error_of_discriminant.
+change_permissible_error_of_discriminant only change one static variable.
+solve_equation use 1 external function: sqrt(_X) from math.h.
+sqrt(_X) can't throw exceptions. solve_equation can't throw exceptions too.
+Therefor tests need only assert expression.
+tests/src/tests_interface.h contains custom assert realization.
+Macro ASSERT(expression) can be used only in construction BEGIN_TEST(test_name){}END_TEST.
+If expression is false, this macro make that test failed.
+Tests can be collected to groups with macro ADD_TEST(test_name), used in construction BEGIN_GROUP(group_name)  END_GROUP
+Tests group can be run in functions with macro RUN_TESTS_GROUP(group_name, printing_group_name)
+
+
+Tests:
+File tests_quadratic_equation.c contains all tests for library's functions.
+There are some checking macros for convenience of testing in the beginning of this file.
+Function equal realize comparing of type double numbers with permissible error.
+Right values of quadratic equations was gotten by wolframalpha.com
+Tests divided into six groups:
+"Invalid_inputs" - trying to give some incorrect args to solve_equation
+"Equal_roots" - checks the correctness of calculations when a == 0 or b == c == 0 or discriminant == 0
+"Different_permissible_error_of_discriminant" - change permissible error of comparing discriminant and 0 and look, works that or no
+"Different_real_roots" - checks the correctness of calculations when discriminant > 0
+"Different_complex_roots" - checks the correctness of calculations when discriminant < 0
+"Input_limits" - try to give arg with different types and find max and min values of args to solve_equation working correctly
