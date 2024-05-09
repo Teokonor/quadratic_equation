@@ -20,6 +20,7 @@ For example, expression solve_equation(a,b,c).second.Re return real part of seco
 Always second.Re >= first.Re and second.Im >= first.Im
 If args incorrect (anyone is nan or inf or a == b == 0), solve_equation return { { NAN, NAN }, { NAN, NAN } }
 solve_equation compare discriminant and 0 with some permissible error. Default value is 10^(-10).
+solve_equation compare c^2 and 0 with same permissible error. If it is considered ==0, return roots 0 and -b/a.
 You can change permissible error by change_permissible_error_of_discriminant(double new_value).
 You can get default value of permissible error by macro DEFAULT_VALUE_OF_permissible_error_of_discriminant
 Also you can use structs complex_number and complex_pair in your projects if you need.

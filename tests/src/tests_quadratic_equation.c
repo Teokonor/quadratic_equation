@@ -209,8 +209,8 @@ BEGIN_TEST(equal_positive_non_int_roots)
 	SOLVE_AND_COMPARE(1, -1051.82608, 276584.5256420416, 525.91304, 0, 525.91304, 0);
 	SOLVE_AND_COMPARE(-50, 52591.304, -13829226.28210208, 525.91304, 0, 525.91304, 0);
 
-	SOLVE_AND_COMPARE(1, -0.000762, 0.000000145161, 0.000381, 0, 0.000381, 0);
-	SOLVE_AND_COMPARE(86, -0.065532, 0.000012483846, 0.000381, 0, 0.000381, 0);
+	SOLVE_AND_COMPARE(1, -0.00762, 0.0000145161, 0.00381, 0, 0.00381, 0);
+	SOLVE_AND_COMPARE(86, -0.65532, 0.0012483846, 0.00381, 0, 0.00381, 0);
 
 	SOLVE_AND_COMPARE(1, -82.36, 1695.7924, 41.18, 0, 41.18, 0);
 	SOLVE_AND_COMPARE(2.9371, -241.899556, 4980.71185804, 41.18, 0, 41.18, 0);
@@ -222,8 +222,8 @@ BEGIN_TEST(equal_negative_non_int_roots)
 	SOLVE_AND_COMPARE(1, 2.6, 1.69, -1.3, 0, -1.3, 0);
 	SOLVE_AND_COMPARE(481.00652, 1250.616952, 812.9010188, -1.3, 0, -1.3, 0);
 
-	SOLVE_AND_COMPARE(1, 0.000762, 0.000000145161, -0.000381, 0, -0.000381, 0);
-	SOLVE_AND_COMPARE(86, 0.065532, 0.000012483846, -0.000381, 0, -0.000381, 0);
+	SOLVE_AND_COMPARE(1, 0.00762, 0.0000145161, -0.00381, 0, -0.00381, 0);
+	SOLVE_AND_COMPARE(86, 0.65532, 0.0012483846, -0.00381, 0, -0.00381, 0);
 
 	SOLVE_AND_COMPARE(1, 82.36, 1695.7924, -41.18, 0, -41.18, 0);
 	SOLVE_AND_COMPARE(2.9371, 241.899556, 4980.71185804, -41.18, 0, -41.18, 0);
@@ -246,27 +246,27 @@ END_GROUP
 BEGIN_TEST(Permissible_errors_of_discriminant_less_default)
 {
 	// Default 0.0000000001
-	complex_pair res = solve_equation(1, -0.001, 0.000000250024999);
+	complex_pair res = solve_equation(1, -0.1, 0.002500000025);
 	ASSERT(ROOTS_ARE_IDENTICAL(res));
-	res = solve_equation(1, -0.001, 0.000000250025);
+	res = solve_equation(1, -0.1, 0.0025000000250001);
 	ASSERT(!ROOTS_ARE_IDENTICAL(res));
 
-	change_permissible_error_of_discriminant(0.000000000001);
-	res = solve_equation(1, -0.001, 0.00000025000024999);
+	change_permissible_error_of_discriminant(-0.000000000001);
+	res = solve_equation(1, -0.01, 0.00002500000025);
 	ASSERT(ROOTS_ARE_IDENTICAL(res));
-	res = solve_equation(1, -0.001, 0.00000025000025);
+	res = solve_equation(1, -0.01, 0.000025000000250001);
 	ASSERT(!ROOTS_ARE_IDENTICAL(res));
 
 	change_permissible_error_of_discriminant(0.000000000000100000001);
-	res = solve_equation(1, -0.001, 0.000000250000025);
+	res = solve_equation(1, -0.01, 0.000025000000025);
 	ASSERT(ROOTS_ARE_IDENTICAL(res));
-	res = solve_equation(1, -0.001, 0.00000025000002500001);
+	res = solve_equation(1, -0.01, 0.00002500000002500001);
 	ASSERT(!ROOTS_ARE_IDENTICAL(res));
 
-	change_permissible_error_of_discriminant(0.0000000000004);
-	res = solve_equation(1, -0.001, 0.0000002500001);
+	change_permissible_error_of_discriminant(-0.0000000000004);
+	res = solve_equation(1, -0.01, 0.0000250000001);
 	ASSERT(ROOTS_ARE_IDENTICAL(res));
-	res = solve_equation(1, -0.001, 0.000000250000100001);
+	res = solve_equation(1, -0.01, 0.000025000000100001);
 	ASSERT(!ROOTS_ARE_IDENTICAL(res));
 
 	change_permissible_error_of_discriminant(DEFAULT_VALUE_OF_permissible_error_of_discriminant);
@@ -276,12 +276,12 @@ END_TEST
 BEGIN_TEST(Permissible_errors_of_discriminant_more_default_less_1)
 {
 	change_permissible_error_of_discriminant(0.00000001);
-	complex_pair res = solve_equation(1, -0.001, 0.0000002524999);
+	complex_pair res = solve_equation(1, -0.1, 0.0025000025);
 	ASSERT(ROOTS_ARE_IDENTICAL(res));
-	res = solve_equation(1, -0.001, 0.0000002525);
+	res = solve_equation(1, -0.1, 0.0025000025001);
 	ASSERT(!ROOTS_ARE_IDENTICAL(res));
 
-	change_permissible_error_of_discriminant(0.001);
+	change_permissible_error_of_discriminant(-0.001);
 	res = solve_equation(1, -10, 25.00024999);
 	ASSERT(ROOTS_ARE_IDENTICAL(res));
 	res = solve_equation(1, -10, 25.00025);
@@ -315,7 +315,7 @@ BEGIN_TEST(Permissible_errors_of_discriminant_1_or_more)
 }
 END_TEST
 
-BEGIN_GROUP(Different_permissible_error_of_discriminant)
+BEGIN_GROUP(Different_permissible_errors_of_discriminant)
 ADD_TEST(Permissible_errors_of_discriminant_less_default)
 ADD_TEST(Permissible_errors_of_discriminant_more_default_less_1)
 ADD_TEST(Permissible_errors_of_discriminant_1_or_more)
@@ -331,7 +331,7 @@ BEGIN_TEST(b_is_null_real_roots)
 	SOLVE_AND_COMPARE(259.18, 0, -24.6, -sqrt(24.6 / 259.18), 0, sqrt(24.6 / 259.18), 0);
 	SOLVE_AND_COMPARE(-259.18, 0, 24.6, -sqrt(24.6 / 259.18), 0, sqrt(24.6 / 259.18), 0);
 	SOLVE_AND_COMPARE(-5, 0, 94761723843, -sqrt(94761723843 / 5), 0, sqrt(94761723843 / 5), 0);
-	SOLVE_AND_COMPARE(5, 0, -0.0000010000543, -sqrt(0.0000010000543 / 5), 0, sqrt(0.0000010000543 / 5), 0);
+	SOLVE_AND_COMPARE(5, 0, -0.000010000543, -sqrt(0.000010000543 / 5), 0, sqrt(0.000010000543 / 5), 0);
 }
 END_TEST
 
@@ -339,8 +339,11 @@ BEGIN_TEST(c_is_null)
 {
 	SOLVE_AND_COMPARE(1, -18.032, 0, 0, 0, 18.032, 0);
 	SOLVE_AND_COMPARE(1, 18.032, 0, -18.032, 0, 0, 0);
+	SOLVE_AND_COMPARE(1, 18.032, 0, -18.032, 0, 0, 0.00000000000000000000000001);
 	SOLVE_AND_COMPARE(125.521, -0.16, 0, 0, 0, 0.16 / 125.521, 0);
 	SOLVE_AND_COMPARE(0.00000000000000000000000000000000000000000000000000000000000000232434, 0.000000000000000000000000000000000000000000000000000000000000007576, 0, -3.25942, 0, 0, 0);
+	SOLVE_AND_COMPARE(-0.00000000000000000000000000000000000000000000000000000000000000232434, 0.000000000000000000000000000000000000000000000000000000000000007576, 
+		0.0000000000000000000000000008756, 0, 0, 3.25942, 0);
 }
 END_TEST
 
@@ -396,7 +399,7 @@ BEGIN_TEST(b_is_null_imaginary_roots)
 	SOLVE_AND_COMPARE(259.18, 0, 24.6, 0, -sqrt(24.6 / 259.18), 0, sqrt(24.6 / 259.18));
 	SOLVE_AND_COMPARE(-259.18, 0, -24.6, 0, -sqrt(24.6 / 259.18), 0, sqrt(24.6 / 259.18));
 	SOLVE_AND_COMPARE(5, 0, 94761723843, 0, -sqrt(94761723843 / 5), 0, sqrt(94761723843 / 5));
-	SOLVE_AND_COMPARE(-5, 0, -0.0000010000543, 0, -sqrt(0.0000010000543 / 5), 0, sqrt(0.0000010000543 / 5));
+	SOLVE_AND_COMPARE(-5, 0, -0.000010000543, 0, -sqrt(0.000010000543 / 5), 0, sqrt(0.000010000543 / 5));
 }
 END_TEST
 
@@ -600,7 +603,7 @@ END_GROUP
 void tests_quadratic_equation() {
 	RUN_TESTS_GROUP(Invalid_inputs);
 	RUN_TESTS_GROUP(Equal_roots);
-	RUN_TESTS_GROUP(Different_permissible_error_of_discriminant);
+	RUN_TESTS_GROUP(Different_permissible_errors_of_discriminant);
 	RUN_TESTS_GROUP(Different_real_roots);
 	RUN_TESTS_GROUP(Different_complex_roots);
 	RUN_TESTS_GROUP(Input_limits);

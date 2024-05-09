@@ -15,12 +15,16 @@ complex_pair solve_equation(double a, double b, double c) {
 		firstRe = NAN;  firstIm = NAN;  secondRe = NAN;  secondIm = NAN;
 	}
 	else if (a == 0) {
+		// Calculations by discriminant consist division into a. If equation is linear, it will be solve here.
 		firstRe = (-c) / b;  firstIm = 0.;  secondRe = (-c) / b;  secondIm = 0.;
 	}
-	else if (c == 0) {
+	else if (c * c <= permissible_error_of_discriminant) {
+		// If c and b is very small, discriminant will be considered == 0, and calculated roots will be -b/2a and -b/2a.
+		// This block is for such cases
 		firstRe = 0.;  firstIm = 0.;  secondRe = (-b) / a;  secondIm = 0.;
 	}
 	else {
+		// This block for default cases when we can calculate discriminant and roots by it
 		double discriminant = b * b - 4 * a * c;
 		if (discriminant <= permissible_error_of_discriminant && discriminant >= -permissible_error_of_discriminant) {
 			firstRe = (-b) / (2 * a); secondRe = firstRe;
