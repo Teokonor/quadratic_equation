@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 project(testing_quadratic_equation)
 
@@ -11,3 +11,5 @@ add_executable(testing_quadratic_equation ${SOURCE_MAIN})
 add_subdirectory(../../src ../../build)
 
 target_link_libraries(testing_quadratic_equation quadratic_equation)
+
+target_compile_options(testing_quadratic_equation PRIVATE -Wall -Wextra)

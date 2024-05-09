@@ -11,11 +11,14 @@ void change_permissible_error_of_discriminant(double new_value) {
 
 complex_pair solve_equation(double a, double b, double c) {
 	double firstRe = 0, firstIm = 0, secondRe = 0, secondIm = 0;
-	if (isnan(a) || isinf(a) || isnan(b) || isinf(b) || isnan(c) || isinf(c) || a == 0 && b == 0) {
+	if (isnan(a) || isinf(a) || isnan(b) || isinf(b) || isnan(c) || isinf(c) || (a == 0 && b == 0)) {
 		firstRe = NAN;  firstIm = NAN;  secondRe = NAN;  secondIm = NAN;
 	}
 	else if (a == 0) {
-		firstRe = (-c) / b;  firstIm = 0. / b;  secondRe = (-c) / b;  secondIm = 0. / b;
+		firstRe = (-c) / b;  firstIm = 0.;  secondRe = (-c) / b;  secondIm = 0.;
+	}
+	else if (c == 0) {
+		firstRe = 0.;  firstIm = 0.;  secondRe = (-b) / a;  secondIm = 0.;
 	}
 	else {
 		double discriminant = b * b - 4 * a * c;

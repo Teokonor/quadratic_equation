@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 project(example_console_app)
 
@@ -11,3 +11,5 @@ add_executable(example_console_app ${SOURCE_MAIN})
 add_subdirectory(../../src ../../build)
 
 target_link_libraries(example_console_app quadratic_equation)
+
+target_compile_options(example_console_app PRIVATE -Wall -Wextra)

@@ -3,4 +3,5 @@
 
 int main() {
 	tests_quadratic_equation();
+	return 0;
 }

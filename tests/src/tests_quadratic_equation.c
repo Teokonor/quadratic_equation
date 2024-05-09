@@ -340,6 +340,7 @@ BEGIN_TEST(c_is_null)
 	SOLVE_AND_COMPARE(1, -18.032, 0, 0, 0, 18.032, 0);
 	SOLVE_AND_COMPARE(1, 18.032, 0, -18.032, 0, 0, 0);
 	SOLVE_AND_COMPARE(125.521, -0.16, 0, 0, 0, 0.16 / 125.521, 0);
+	SOLVE_AND_COMPARE(0.00000000000000000000000000000000000000000000000000000000000000232434, 0.000000000000000000000000000000000000000000000000000000000000007576, 0, -3.25942, 0, 0, 0);
 }
 END_TEST
 
@@ -441,7 +442,7 @@ END_GROUP
 
 BEGIN_TEST(Input_unsigned_long_long)
 {
-	unsigned long long num = 17472313498683285243;
+	unsigned long long num = 17472313498683285243ULL;
 	SOLVE_AND_COMPARE(num, num, num, -0.5, -0.86603, -0.5, 0.86603);
 	SOLVE_AND_COMPARE(1, num, 0, -(double)num, 0, 0, 0);
 }
@@ -488,26 +489,14 @@ END_TEST
 BEGIN_TEST(Max_args_to_result_not_inf_when_c_is_null)
 {
 	complex_pair res = solve_equation(1, DBL_MAX, 0);
-	ASSERT(isinf(res.first.Re) && isinf(res.second.Re));
-	res = solve_equation(123456000000, DBL_MAX, 0);
-	ASSERT(isinf(res.first.Re) && isinf(res.second.Re));
+	ASSERT(!isinf(res.first.Re) && !isinf(res.second.Re));
+	res = solve_equation(0.999999999999, DBL_MAX, 0);
+	ASSERT(isinf(res.first.Re) && (res.second.Re == 0));
 
 	res = solve_equation(1, -DBL_MAX, 0);
-	ASSERT(isinf(res.first.Re) && isinf(res.second.Re));
-	res = solve_equation(123456000000, -DBL_MAX, 0);
-	ASSERT(isinf(res.first.Re) && isinf(res.second.Re));
-
-
-
-	res = solve_equation(1, sqrt(DBL_MAX), 0);
 	ASSERT(!isinf(res.first.Re) && !isinf(res.second.Re));
-	res = solve_equation(1, sqrt(DBL_MAX) * 1.0000000001, 0);
-	ASSERT(isinf(res.first.Re) && isinf(res.second.Re));
-
-	res = solve_equation(1, -sqrt(DBL_MAX), 0);
-	ASSERT(!isinf(res.first.Re) && !isinf(res.second.Re));
-	res = solve_equation(1, -sqrt(DBL_MAX) * 1.0000000001, 0);
-	ASSERT(isinf(res.first.Re) && isinf(res.second.Re));
+	res = solve_equation(0.999999999999, -DBL_MAX, 0);
+	ASSERT((res.first.Re == 0) && isinf(res.second.Re));
 }
 END_TEST
 
