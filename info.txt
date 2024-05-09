@@ -1,7 +1,7 @@
 Hello! It's quadratic_equation - library to calculate roots of quadratic equations.
 
 
-! This project using CMake to compile. You need CMake version 2.8 or higher to compile that
+! This project using CMake to compile. You need CMake version 2.8.12 or higher to compile that
 
 
 Commands:
